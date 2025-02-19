@@ -1,0 +1,24 @@
+/* src/styles/variables.css */
+
+:root {
+    --black: #000505;
+    --space-cadet: #3B3355;
+    --ultra-violet: #5D5D81;
+    --columbia-blue: #BFCDE0;
+    --white: #FEFCFD;
+
+    --font-main: 'Poppins', sans-serif;
+
+    --fs-xl: 3rem;
+    --fs-600: 1.8rem;
+    --fs-500: 1.2rem;
+    --fs-400: 1rem;
+    --fs-300: .7rem;
+    --fs-200: .5rem;
+  
+    /* Extras */
+    --text-primary: var(--white);
+    --text-secondary: var(--black);
+    --background-dark: var(--black);
+    --background-light: var(--columbia-blue);
+  }  

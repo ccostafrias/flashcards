@@ -1,0 +1,43 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+@import './variables.css';
+
+/*Reset & root*/
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#root {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    height: 100vh;
+}
+
+body, button, input, textarea, a {
+    color: var(--text-primary);
+    font-family: var(--font-main);
+}
+
+body {
+    background: var(--background-dark);
+    font-size: 16px;
+    line-height: 1;
+}
+
+button, input {
+    /* appearance: none; */
+    background: none;
+    outline: none;
+    border: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+/*Custom resets*/
+
+img {
+    max-width: 100%;
+}

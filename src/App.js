@@ -1,9 +1,26 @@
-import React from "react";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Header from './components/Header';
+import Home from './pages/Home';
+import DeckView from './pages/DeckView';
+import Revision from './pages/Revision';
+import Statistics from './pages/Statistics';
+import './styles/global.css';
 
-export default function App() {
+function App() {
   return (
-    <div className="App">
-      <h1>Opa</h1>
-    </div>
-  )
+    <Router> {/* Router é usado para naveção por links, o que deixa mais fluído */}
+        <Header />
+        <main>
+          <Routes>
+            <Route index element={<Home />} /> {/* index define essa Route como a principal */}
+            <Route path="/deck/:id" element={<DeckView />} />
+            <Route path="/revision" element={<Revision />} />
+            <Route path="/statistics" element={<Statistics />} />
+          </Routes>
+        </main>
+    </Router>
+  );
 }
+
+export default App;

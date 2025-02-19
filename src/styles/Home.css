@@ -1,0 +1,127 @@
+/* src/styles/Home.css */
+@import './variables.css';
+
+.home {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 50px 20px;
+  font-family: Arial, sans-serif;
+  background-color: var(--background-dark);
+  color: var(--text-primary);
+}
+
+.home h1 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 2rem;
+}
+
+/* Estilizando a lista de decks */
+.home ul {
+  list-style: none;
+  padding: 0;
+}
+
+.home li {
+  background-color: var(--space-cadet);
+  /* border: 1px solid #ddd; */
+  padding: 15px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 4px;
+  /* transition: opacity .3s ease; */
+}
+
+
+/* Botão para ver o deck */
+.deck-link:hover {
+  text-decoration: underline;
+}
+
+/* Botão para criar um novo deck */
+.btn-criar-deck {
+  background-color: #2ecc71;
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 4px;
+  font-size: 1rem;
+  display: block;
+  margin: 20px auto;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-criar-deck:hover {
+  background-color: #27ae60;
+}
+
+.no-decks-message {
+  text-align: center;
+  font-size: 1.2rem;
+  /* color: var(--black); */
+  margin-top: 20px;
+}
+
+/* Button */
+
+.btn-salvar,
+.btn-cancelar {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.btn-salvar {
+  background: var(--ultra-violet);
+  color: var(--white);
+}
+
+.btn-salvar:hover {
+  background: var(--space-cadet);
+}
+
+.btn-cancelar {
+  background: var(--columbia-blue);
+  color: var(--black);
+}
+
+.btn-cancelar:hover {
+  background: var(--space-cadet);
+  color: var(--white);
+}
+
+/* Icones */
+
+
+.icon-delete, .icon-edit {
+  font-size: 22px;
+  color: var(--text-primary);
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.icon-delete:hover, .icon-edit:hover {
+  transform: scale(1.1);
+  /* color: darkred; */
+}
+
+
+/* Responsividade para telas menores */
+@media (max-width: 600px) {
+  .home li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .btn-ver-deck {
+    margin-top: 10px;
+  }
+}  
