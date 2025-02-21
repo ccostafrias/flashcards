@@ -1,13 +1,18 @@
 // src/pages/DeckView.js
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import Modal from '../components/Modal';
 import '../styles/DeckView.css';
 
 function DeckView() {
   const { id } = useParams(); // id do deck a partir da URL
+  const navigate = useNavigate()
   const [deck, setDeck] = useState(null);
   const [flashcards, setFlashcards] = useState([]);
   const [newFlashcard, setNewFlashcard] = useState({ question: '', answer: '' });
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState(""); // "create", "edit", "delete"
 
   // Carregar dados do deck e dos flashcards do localStorage
   useEffect(() => {
@@ -17,20 +22,40 @@ function DeckView() {
     setDeck(foundDeck);
 
     // Carregar flashcards do deck
-    const savedFlashcards = JSON.parse(localStorage.getItem(`flashcards_${id}`)) || [];
+    const savedFlashcards = foundDeck?.flashcards || [];
     setFlashcards(savedFlashcards);
   }, [id]);
+
+  useEffect(() => {
+    console.log()
+  }, [flashcards])
 
   // Adicionar um novo flashcard
   const handleAddFlashcard = () => {
     if (newFlashcard.question.trim() && newFlashcard.answer.trim()) {
-      const updatedFlashcards = [
-        ...flashcards,
-        { id: Date.now(), ...newFlashcard },
-      ];
-      setFlashcards(updatedFlashcards);
-      localStorage.setItem(`flashcards_${id}`, JSON.stringify(updatedFlashcards));
+      // Carregar os decks do localStorage
+      const decks = JSON.parse(localStorage.getItem('decks')) || [];
+      
+      // Encontrar o deck atual
+      const updatedDecks = decks.map((deck) => {
+        if (deck.id.toString() === id) {
+          const updatedFlashcards = [
+            ...(deck.flashcards || []),
+            { id: Date.now(), ...newFlashcard },
+          ];
+          return { ...deck, flashcards: updatedFlashcards };
+        }
+        return deck;
+      });
+  
+      // Salvar os decks atualizados no localStorage
+      localStorage.setItem('decks', JSON.stringify(updatedDecks));
       setNewFlashcard({ question: '', answer: '' });
+      setIsModalOpen(false);
+      setModalType("");
+      
+      // Se você também mantém o estado local para flashcards, atualize-o:
+      setFlashcards(prev => [...prev, { id: Date.now(), ...newFlashcard }]);
     }
   };
 
@@ -38,13 +63,26 @@ function DeckView() {
   const handleDeleteFlashcard = (flashcardId) => {
     const updatedFlashcards = flashcards.filter(card => card.id !== flashcardId);
     setFlashcards(updatedFlashcards);
-    localStorage.setItem(`flashcards_${id}`, JSON.stringify(updatedFlashcards));
+    
+    const decks = JSON.parse(localStorage.getItem('decks')) || [];
+    const updatedDecks = decks.map((deck) => {
+      if (deck.id.toString() === id) {
+        return { ...deck, flashcards: updatedFlashcards };
+      }
+      return deck;
+    });
+    localStorage.setItem('decks', JSON.stringify(updatedDecks));
+  };
+  
+  // Fechar Modal
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
     <div className="deck-view">
       <header className="deck-header">
-        <Link to="/" className="back-link">← Voltar</Link>
+        {/* <Link to="/" className="back-link">← Voltar</Link> */}
         <h1>{deck ? deck.name : 'Deck não encontrado'}</h1>
       </header>
 
@@ -66,28 +104,50 @@ function DeckView() {
         )}
       </section>
 
-      <section className="new-flashcard-section">
-        <h2>Novo Flashcard</h2>
-        <input
-          type="text"
-          placeholder="Pergunta"
-          value={newFlashcard.question}
-          onChange={(e) =>
-            setNewFlashcard({ ...newFlashcard, question: e.target.value })
-          }
-        />
-        <input
-          type="text"
-          placeholder="Resposta"
-          value={newFlashcard.answer}
-          onChange={(e) =>
-            setNewFlashcard({ ...newFlashcard, answer: e.target.value })
-          }
-        />
-        <button className="btn-add-flashcard" onClick={handleAddFlashcard}>
-          Adicionar Flashcard
+      <section className='deckview-btns'>
+        <button className="btn" onClick={() => {
+          setIsModalOpen(true)
+          setModalType("create")
+        }}>
+          Criar Flashcard
+        </button>
+        <button className='btn' disabled={!flashcards.length} onClick={() => {
+          navigate(`/revision/${id}`)
+        }}>
+          Iniciar Revisão
         </button>
       </section>
+        {/* Modal Reutilizável */}
+        <Modal isOpen={isModalOpen} title={modalType === "delete" ? "Confirmar Exclusão" : modalType === "edit" ? "Renomear Deck" : "Criar Novo Deck"} onClose={closeModal}>
+          {modalType === "create" ? (
+            <div>
+              <h2>Novo Flashcard</h2>
+              <input
+                type="text"
+                placeholder="Pergunta"
+                value={newFlashcard.question}
+                onChange={(e) =>
+                  setNewFlashcard({ ...newFlashcard, question: e.target.value })
+                }
+              />
+              <input
+                type="text"
+                placeholder="Resposta"
+                value={newFlashcard.answer}
+                onChange={(e) =>
+                  setNewFlashcard({ ...newFlashcard, answer: e.target.value })
+                }
+              />
+              <button className="btn-add-flashcard" onClick={() => {
+                handleAddFlashcard()
+              }}>
+                Adicionar Flashcard
+              </button>
+            </div>
+          ) : modalType === "" ? (
+            <div></div>
+          ) : null}
+        </Modal>
     </div>
   );
 }

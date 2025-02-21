@@ -9,8 +9,8 @@ function Home() {
   const [decks, setDecks] = useState([]);
   const [newDeckName, setNewDeckName] = useState('');
   const [editingDeck, setEditingDeck] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDeck, setSelectedDeck] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState(""); // "create", "edit", "delete"
 
   // Carregar decks do localStorage ao iniciar
@@ -77,13 +77,6 @@ function Home() {
     setNewDeckName('');
   };
 
-    // Abrir Modal Específico
-    const openModal = (type, deck = null) => {
-      setModalType(type);
-      setSelectedDeck(deck);
-      setIsModalOpen(true);
-    };
-  
     // Fechar Modal
     const closeModal = () => {
       setIsModalOpen(false);
@@ -119,7 +112,7 @@ function Home() {
       )}
 
       {/* Botão para abrir modal de criação */}
-      <button className="btn-criar-deck" onClick={() => {
+      <button className="btn" onClick={() => {
         setIsModalOpen(true)
         setModalType("create")
       }}>

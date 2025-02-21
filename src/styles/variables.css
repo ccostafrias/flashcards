@@ -4,6 +4,7 @@
     --black: #000505;
     --space-cadet: #3B3355;
     --ultra-violet: #5D5D81;
+    --dark-violet: #29293b;
     --columbia-blue: #BFCDE0;
     --white: #FEFCFD;
 
@@ -19,6 +20,6 @@
     /* Extras */
     --text-primary: var(--white);
     --text-secondary: var(--black);
-    --background-dark: var(--black);
+    --background-dark: var(--space-cadet);
     --background-light: var(--columbia-blue);
   }  

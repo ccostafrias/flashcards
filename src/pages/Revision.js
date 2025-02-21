@@ -1,9 +1,14 @@
-import React from "react";
+import { useParams } from 'react-router-dom';
 
-export default function Revision() {
+function Revision() {
+  const { id } = useParams();
+
   return (
-    <div className="App">
-      <h1>Opa</h1>
+    <div>
+      <h1>Revisão do Deck {id}</h1>
+      <p>Aqui aparecerão os flashcards para revisar.</p>
     </div>
-  )
+  );
 }
+
+export default Revision;

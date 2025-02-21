@@ -17,6 +17,7 @@ function App() {
             <Route path="/deck/:id" element={<DeckView />} />
             <Route path="/revision" element={<Revision />} />
             <Route path="/statistics" element={<Statistics />} />
+            <Route path="/revision/:id" element={<Revision />} />
           </Routes>
         </main>
     </Router>

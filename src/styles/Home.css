@@ -26,7 +26,7 @@
 }
 
 .home li {
-  background-color: var(--space-cadet);
+  background-color: var(--dark-violet);
   /* border: 1px solid #ddd; */
   padding: 15px;
   margin-bottom: 10px;
@@ -44,8 +44,8 @@
 }
 
 /* Botão para criar um novo deck */
-.btn-criar-deck {
-  background-color: #2ecc71;
+.btn {
+  background-color: var(--dark-violet);
   color: #fff;
   border: none;
   padding: 12px 20px;
@@ -54,11 +54,16 @@
   display: block;
   margin: 20px auto;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 
-.btn-criar-deck:hover {
-  background-color: #27ae60;
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: .7;
+}
+
+.btn:not(:disabled):hover {
+  opacity: .8;
 }
 
 .no-decks-message {
