@@ -1,0 +1,144 @@
+/* src/styles/Revision.css */
+
+.revision {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    height: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    /* color: var(--text-secondary, #000); */
+  }
+  
+  .revision h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Flashcard container */
+  .flashcard {
+    display: grid;
+    gap: 10px;
+    grid-template-rows: 1fr auto auto;
+    justify-items: center;
+    background: var(--columbia-blue, #BFCDE0);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
+    /* margin-bottom: 20px; */
+    text-align: center;
+  }
+  
+  .flashcard h2 {
+    /* margin-bottom: 15px; */
+    color: var(--ultra-violet, #5D5D81);
+  }
+
+  .answer-wrapper {
+    width: 100%;
+    background-color: var(--ultra-violet);
+    border-radius: 15px;
+  }
+  
+  .flashcard input[type="text"] {
+    border: none;
+    outline: none;
+    color: var(--white);
+    width: 100%;
+    padding: 10px;
+    /* border: 1px solid var(--columbia-blue, #BFCDE0); */
+    border-radius: 4px;
+    /* margin-bottom: 15px; */
+    font-size: 1rem;
+  }
+  
+  .flashcard button {
+    background: var(--ultra-violet, #5D5D81);
+    color: var(--white, #FEFCFD);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .flashcard button:hover {
+    background: var(--space-cadet, #3B3355);
+  }
+  
+  /* Feedback após verificação */
+  .feedback {
+    background: #f9f9f9;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 10px;
+  }
+  
+  /* Modal Styles (geral, pode ser compartilhado com outros modais) */
+  /* .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal {
+    background: var(--white, #FEFCFD);
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  }
+  
+  .modal h2 {
+    margin-bottom: 15px;
+    color: var(--ultra-violet, #5D5D81);
+  }
+  
+  .modal p {
+    margin-bottom: 15px;
+  } */
+  
+  .evaluation-buttons {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+  }
+  
+  .evaluation-buttons button {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    color: var(--white, #FEFCFD);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .evaluation-buttons button:nth-child(1) {
+    background: #27ae60; /* Fácil */
+  }
+  
+  .evaluation-buttons button:nth-child(2) {
+    background: #f39c12; /* Médio */
+  }
+  
+  .evaluation-buttons button:nth-child(3) {
+    background: #e74c3c; /* Difícil */
+  }
+  
+  .evaluation-buttons button:hover {
+    opacity: 0.8;
+  }
+  
