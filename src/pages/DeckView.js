@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import Modal from '../components/Modal';
+import TagInput from '../components/TagInput';
 import '../styles/DeckView.css';
 
 function DeckView() {
@@ -10,6 +11,9 @@ function DeckView() {
   const [deck, setDeck] = useState(null);
   const [flashcards, setFlashcards] = useState([]);
   const [newFlashcard, setNewFlashcard] = useState({ question: '', answer: '' });
+  const [flashcardTags, setFlashcardTags] = useState([]);
+  const [allTags, setAllTags] = useState([])
+
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState(""); // "create", "edit", "delete"
@@ -23,6 +27,7 @@ function DeckView() {
 
     // Carregar flashcards do deck
     const savedFlashcards = foundDeck?.flashcards || [];
+    const tags = decks?.flashcards?.tags
     setFlashcards(savedFlashcards);
   }, [id]);
 
@@ -138,6 +143,19 @@ function DeckView() {
                   setNewFlashcard({ ...newFlashcard, answer: e.target.value })
                 }
               />
+              {/* <input
+                type="text"
+                placeholder="Tags (separadas por vírgula)"
+                value={newFlashcardTags}
+                onChange={(e) => setNewFlashcardTags(e.target.value)}
+              /> */}
+              <TagInput
+                tags={flashcardTags}
+                setTags={setFlashcardTags}
+                allTags={allTags}
+                setAllTags={setAllTags}
+              />
+
               <button className="btn-add-flashcard" onClick={() => {
                 handleAddFlashcard()
               }}>

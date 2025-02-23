@@ -1,4 +1,4 @@
-/* src/styles/variables.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
 
 :root {
     --black: #000505;
@@ -6,7 +6,7 @@
     --ultra-violet: #5D5D81;
     --dark-violet: #29293b;
     --columbia-blue: #BFCDE0;
-    --white: #FEFCFD;
+    --white: #ffffff;
 
     --font-main: 'Poppins', sans-serif;
 

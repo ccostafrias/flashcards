@@ -10,6 +10,7 @@ function Header() {
       </Link>
       <nav className="nav-links">
         <Link to="/statistics">Estatísticas</Link>
+        <Link to="/panels">Painel</Link>
       </nav>
     </header>
   );
