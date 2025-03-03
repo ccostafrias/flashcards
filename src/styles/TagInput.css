@@ -1,23 +1,25 @@
 /* src/styles/TagInput.css */
 .tag-input-container {
   width: 100%;
-  margin-top: 10px;
-  position: relative;
+  /* margin-top: 10px; */
 }
 
 .tag-input-row {
-  display: flex;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
   gap: 5px;
 }
 
 .tag-input-row input {
-  flex: 1;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  margin: 0;
 }
 
 .btn-add-tag {
+  aspect-ratio: 1/1;
   padding: 8px 12px;
   background-color: #5D5D81;
   color: #FEFCFD;
@@ -28,17 +30,19 @@
 }
 
 .btn-add-tag:hover {
-  background-color: #3B3355;
+  /* background-color: #3B3355; */
 }
 
 .suggestions-list {
+  /* display: none; */
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
-  background: #fff;
-  border: 1px solid #ccc;
+  background: var(--dark-violet);
+  /* border: 1px solid #ccc; */
   border-top: none;
+  border-radius: 0 0 5px 5px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -54,7 +58,7 @@
 }
 
 .suggestions-list li:hover {
-  background: #f0f0f0;
+  opacity: .8;
 }
 
 .tags-container {
@@ -77,5 +81,6 @@
   margin-left: 5px;
   cursor: pointer;
   font-weight: bold;
+  font-size: 10px;
   color: #fff;
 }

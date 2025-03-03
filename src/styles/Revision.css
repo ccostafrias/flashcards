@@ -20,7 +20,7 @@
   .flashcard {
     display: grid;
     gap: 10px;
-    grid-template-rows: 1fr auto auto;
+    grid-template-rows: auto 1fr auto auto;
     justify-items: center;
     background: var(--columbia-blue, #BFCDE0);
     padding: 20px;
@@ -36,35 +36,40 @@
   }
 
   .answer-wrapper {
-    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    width: 60%;
     background-color: var(--ultra-violet);
     border-radius: 15px;
+    overflow: hidden;
+  }
+
+  .flashcard h2 {
+    align-self: center;
+    font-size: 3em;
   }
   
   .flashcard input[type="text"] {
+    display: block;
     border: none;
     outline: none;
     color: var(--white);
-    width: 100%;
-    padding: 10px;
-    /* border: 1px solid var(--columbia-blue, #BFCDE0); */
-    border-radius: 4px;
-    /* margin-bottom: 15px; */
+    flex: 1;
+    padding: 5px 30px;
     font-size: 1rem;
   }
   
-  .flashcard button {
-    background: var(--ultra-violet, #5D5D81);
+  .answer-wrapper button {
+    background: var(--dark-violet);
     color: var(--white, #FEFCFD);
     border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
+    padding: 10px 15px;
     font-size: 1rem;
     cursor: pointer;
     transition: background 0.3s ease;
   }
   
-  .flashcard button:hover {
+  .answer-wrapper button:hover {
     background: var(--space-cadet, #3B3355);
   }
   
@@ -75,6 +80,21 @@
     border: 1px solid #ddd;
     border-radius: 4px;
     margin-top: 10px;
+  }
+
+  /* Next card */
+
+  .nextcard-wrapper {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    color: var(--dark-violet);
+    font-size: 1.2em;
+  }
+
+  .nextcard-wrapper button {
+    color: var(--dark-violet);
+    font-size: 1.2em;
   }
   
   /* Modal Styles (geral, pode ser compartilhado com outros modais) */

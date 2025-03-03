@@ -4,6 +4,7 @@
 /*Reset & root*/
 * {
     margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
@@ -39,4 +40,9 @@ a {
 
 img {
     max-width: 100%;
+}
+
+input::placeholder {
+    color: var(--white);
+    opacity: .6;
 }

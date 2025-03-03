@@ -20,16 +20,17 @@
 }
 
 /* Estilizando a lista de decks */
-.home ul {
-  list-style: none;
-  padding: 0;
+.deck-list {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 15px;
+  /* justify-content: space-between; */
 }
 
 .home li {
   background-color: var(--dark-violet);
   /* border: 1px solid #ddd; */
   padding: 15px;
-  margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -75,6 +76,12 @@
 
 /* Button */
 
+.deck-actions {
+  display: flex;
+  flex: row nowrap;
+  gap: 5px;
+}
+
 .btn-salvar,
 .btn-cancelar {
   padding: 10px 15px;
@@ -117,16 +124,3 @@
   transform: scale(1.1);
   /* color: darkred; */
 }
-
-
-/* Responsividade para telas menores */
-@media (max-width: 600px) {
-  .home li {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .btn-ver-deck {
-    margin-top: 10px;
-  }
-}  

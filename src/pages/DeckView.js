@@ -14,9 +14,29 @@ function DeckView() {
   const [flashcardTags, setFlashcardTags] = useState([]);
   const [allTags, setAllTags] = useState([])
 
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState(""); // "create", "edit", "delete"
+
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [filterReview, setFilterReview] = useState(false);
+  const [filterFav, setFilterFav] = useState(false);
+
+  // Simulando estatísticas
+  const totalCards = deck?.flashcards?.length || 0;
+  const lastReview = deck?.lastReview || "Nunca";
+  const nextReview = deck?.nextReview || "Indefinido";
+  const accuracy = deck?.correctAnswers
+    ? Math.round((deck.correctAnswers / totalCards) * 100)
+    : 0;
+
+  // Função para alternar tags no filtro
+  const toggleTag = (tag) => {
+    setSelectedTags((prevTags) =>
+      prevTags.includes(tag)
+        ? prevTags.filter((t) => t !== tag)
+        : [...prevTags, tag]
+    );
+  };
 
   // Carregar dados do deck e dos flashcards do localStorage
   useEffect(() => {
@@ -26,27 +46,32 @@ function DeckView() {
     setDeck(foundDeck);
 
     // Carregar flashcards do deck
-    const savedFlashcards = foundDeck?.flashcards || [];
-    const tags = decks?.flashcards?.tags
+    const savedFlashcards = foundDeck?.flashcards || [];  
     setFlashcards(savedFlashcards);
   }, [id]);
 
   useEffect(() => {
-    console.log()
-  }, [flashcards])
+    const allTagsFiltered = [
+      ...new Set(
+        (JSON.parse(localStorage.getItem("decks")) || {})
+          .flatMap(deck => deck.flashcards || []) // Pega todos os flashcards
+          .flatMap(flashcard => flashcard.tags || []) // Pega todas as tags de cada flashcard
+      )
+    ]
+    setAllTags(allTagsFiltered)
+  }, [flashcardTags])
 
   // Adicionar um novo flashcard
   const handleAddFlashcard = () => {
     if (newFlashcard.question.trim() && newFlashcard.answer.trim()) {
       // Carregar os decks do localStorage
       const decks = JSON.parse(localStorage.getItem('decks')) || [];
-      
       // Encontrar o deck atual
       const updatedDecks = decks.map((deck) => {
         if (deck.id.toString() === id) {
           const updatedFlashcards = [
             ...(deck.flashcards || []),
-            { id: Date.now(), ...newFlashcard },
+            { id: Date.now(), ...newFlashcard, tags: [...flashcardTags] },
           ];
           return { ...deck, flashcards: updatedFlashcards };
         }
@@ -56,6 +81,7 @@ function DeckView() {
       // Salvar os decks atualizados no localStorage
       localStorage.setItem('decks', JSON.stringify(updatedDecks));
       setNewFlashcard({ question: '', answer: '' });
+      setFlashcardTags([]);
       setIsModalOpen(false);
       setModalType("");
       
@@ -89,27 +115,25 @@ function DeckView() {
       <header className="deck-header">
         {/* <Link to="/" className="back-link">← Voltar</Link> */}
         <h1>{deck ? deck.name : 'Deck não encontrado'}</h1>
+        {/* <button className="settings-btn">⚙️ Configurações</button> */}
       </header>
 
-      <section className="flashcards-section">
-        {flashcards.length === 0 ? (
-          <p className="no-flashcards-message">Nenhum flashcard neste deck. Adicione um novo!</p>
-        ) : (
-          <ul className="flashcards-list">
-            {flashcards.map((card) => (
-              <li key={card.id} className="flashcard-item">
-                <h3 className="flashcard-question">{card.question}</h3>
-                <p className="flashcard-answer">{card.answer}</p>
-                <button className="btn-delete-flashcard" onClick={() => handleDeleteFlashcard(card.id)}>
-                  Excluir
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
+      <section className="deck-view">
+        <div className="deck-stats">
+          <p><span>Total de Cards:</span> <span>{totalCards}</span></p>
+          <p><span>Última Revisão:</span> <span>{lastReview}</span></p>
+          <p><span>Próxima Revisão:</span> <span>{nextReview}</span></p>
+          <p><span>% de Acertos:</span> <span>{accuracy}%</span></p>
+        </div>
       </section>
 
       <section className='deckview-btns'>
+        <button className="btn" onClick={() => {
+            setIsModalOpen(true)
+            setModalType("options")
+          }}>
+            Opções
+        </button>
         <button className="btn" onClick={() => {
           setIsModalOpen(true)
           setModalType("create")
@@ -125,7 +149,7 @@ function DeckView() {
         {/* Modal Reutilizável */}
         <Modal isOpen={isModalOpen} title={modalType === "delete" ? "Confirmar Exclusão" : modalType === "edit" ? "Renomear Deck" : "Criar Novo Deck"} onClose={closeModal}>
           {modalType === "create" ? (
-            <div>
+            <div className='modal--new-flashcard'>
               <h2>Novo Flashcard</h2>
               <input
                 type="text"
@@ -143,20 +167,13 @@ function DeckView() {
                   setNewFlashcard({ ...newFlashcard, answer: e.target.value })
                 }
               />
-              {/* <input
-                type="text"
-                placeholder="Tags (separadas por vírgula)"
-                value={newFlashcardTags}
-                onChange={(e) => setNewFlashcardTags(e.target.value)}
-              /> */}
               <TagInput
                 tags={flashcardTags}
                 setTags={setFlashcardTags}
                 allTags={allTags}
-                setAllTags={setAllTags}
               />
 
-              <button className="btn-add-flashcard" onClick={() => {
+              <button className="modal--btn-add-flashcard" onClick={() => {
                 handleAddFlashcard()
               }}>
                 Adicionar Flashcard
@@ -164,6 +181,48 @@ function DeckView() {
             </div>
           ) : modalType === "" ? (
             <div></div>
+          ) : modalType === "options" ? (
+            <div className='modal--options'>
+              <h2>Opções</h2>
+              <div className="deck-filters">
+                <div className="deck-filters--tag">
+                  <input 
+                    type="checkbox" 
+                    id="myTagCheckbox" 
+                    className="custom-checkbox"
+                    onChange={() => setFilterReview(!filterReview)}
+                  />
+                  <label htmlFor="myTagCheckbox" className="custom-checkbox-label">
+                    Filtrar por Tags
+                  </label>
+                  <div className={`tag-filter ${filterReview ? "active" : ""}`}>
+                    {allTags.map((tag) => (
+                      <>
+                        <button
+                          key={tag}
+                          className={selectedTags.includes(tag) ? "selected" : ""}
+                          onClick={() => toggleTag(tag)}
+                        >
+                          {tag}
+                        </button>
+                        {/* <button onClick={() => setSelectedTags([])}>✖ Reset</button> */}
+                      </>
+                    ))}
+                  </div>
+                </div>
+                <div className="deck-filters--fav">
+                  <input 
+                    type="checkbox" 
+                    id="myFavCheckbox" 
+                    className="custom-checkbox"
+                    onChange={() => setFilterFav(!filterFav)}
+                  />
+                  <label htmlFor="myFavCheckbox" className="custom-checkbox-label">
+                    Filtrar por Favoritos
+                  </label>
+                </div>
+              </div>
+            </div>
           ) : null}
         </Modal>
     </div>

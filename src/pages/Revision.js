@@ -45,7 +45,6 @@ function Revision() {
   const handleEvaluate = (difficulty) => {
     // Aqui você pode atualizar os dados do flashcard para repetição espaçada,
     // por exemplo, definindo uma nova data de revisão baseada no feedback.
-    console.log(`Flashcard ${flashcards[currentIndex].id} avaliado como ${difficulty}`);
     
     // Após avaliação, prepara para o próximo flashcard
     setShowFeedback(false);
@@ -67,6 +66,17 @@ function Revision() {
     <div className="revision">
       <h1>{deck.name}</h1>
       <div className="flashcard">
+        <div className='nextcard-wrapper'>
+            <button><span>{"<"}</span></button>
+            <div>
+              <p>
+                <span>{currentIndex + 1}</span>
+                /
+                <span>{flashcards.length}</span>
+              </p>
+            </div>
+            <button>{">"}</button>
+        </div>
         <h2>{flashcards[currentIndex].question}</h2>
         {!showFeedback ? (
           <>
@@ -77,8 +87,8 @@ function Revision() {
                 value={userAnswer}
                 onChange={(e) => setUserAnswer(e.target.value)}
               />
+              <button onClick={handleSubmitAnswer}>{">"}</button>
             </div>
-            <button onClick={handleSubmitAnswer}>Verificar Resposta</button>
           </>
         ) : (
           <div className="feedback">

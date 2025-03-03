@@ -4,7 +4,9 @@
   display: grid;
   grid-template-rows: auto 1fr auto;
   height: 100%;
+  width: 100%;
   justify-items: center;
+  align-items: center;
   max-width: 800px;
   margin: 0 auto;
   padding: 50px 20px;
@@ -39,42 +41,6 @@
   margin-top: 20px;
 }
 
-.flashcards-list {
-  list-style: none;
-  padding: 0;
-}
-
-.flashcard-item {
-  background: var(--columbia-blue, #BFCDE0);
-  padding: 15px;
-  margin-bottom: 15px;
-  border-radius: 8px;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-}
-
-.flashcard-question {
-  margin: 0 0 5px 0;
-  font-weight: bold;
-}
-
-.flashcard-answer {
-  margin: 0 0 10px 0;
-}
-
-.btn-delete-flashcard {
-  background: red;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.btn-delete-flashcard:hover {
-  background: darkred;
-}
-
 .new-flashcard-section {
   /* border-top: 1px solid #ddd; */
   padding-top: 20px;
@@ -95,17 +61,135 @@
   gap: 10px;
 }
 
-.btn-add-flashcard {
+.modal--btn-add-flashcard {
   background: var(--ultra-violet, #5D5D81);
   color: white;
   border: none;
   padding: 10px 15px;
+  margin-top: 30px;
   border-radius: 5px;
   cursor: pointer;
   font-size: 1rem;
+  text-align: center;
   transition: background 0.3s ease;
 }
 
-.btn-add-flashcard:hover {
+.modal--btn-add-flashcard:hover {
   background: var(--space-cadet, #3B3355);
+}
+
+.modal--new-flashcard {
+  display: flex;
+  flex-flow: column;
+}
+
+.deck-stats {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  gap: 5px;
+  width: 80%;
+  max-width: 400px;
+  margin: 15px 0;
+  /* background: var(--ultra-violet, #5D5D81); */
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.deck-stats p {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+.deck-stats p :first-child {
+  font-weight: bold;
+}
+
+.tag-filter {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 10px;
+}
+
+.tag-filter:not(.active) {
+  opacity: .5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.tag-filter button {
+  padding: 5px 10px;
+  border: none;
+  background: var(--dark-violet);
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.tag-filter .selected {
+  background: var(--ultra-violet, #5D5D81);
+}
+
+.deck-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  text-align: left;
+}
+
+.deck-filters input {
+  width: auto;
+  margin-right: 5px;
+}
+
+/* Esconder o checkbox padrão */
+.custom-checkbox {
+  display: none;
+}
+
+/* Criar um novo checkbox estilizado */
+.custom-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  user-select: none;
+}
+
+/* Caixa personalizada */
+.custom-checkbox-label::before {
+  content: "";
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--ultra-violet, #5D5D81);
+  border-radius: 4px;
+  display: inline-block;
+  background: white;
+  transition: 0.2s ease-in-out;
+}
+
+/* Efeito de seleção */
+.custom-checkbox:checked + .custom-checkbox-label::before {
+  background: var(--ultra-violet, #5D5D81);
+  border-color: var(--ultra-violet, #5D5D81);
+  content: "★";
+  color: white;
+  font-size: 14px;
+  text-align: center;
+  line-height: 18px;
+  /* transform-origin: bottom left; */
+  /* clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%); */
+}
+
+.custom-checkbox:checked + .custom-checkbox-label:hover::before {
+  opacity: 0.8;
+}
+/* Efeito hover */
+.custom-checkbox-label:hover::before {
+  border-color: var(--dark-violet);
 }
